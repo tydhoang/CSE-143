@@ -1,0 +1,3 @@
+Dev data unigram perplexity: 177.4184851436778946009079879
+Dev data bigram perplexity: positive infinity
+Dev data trigram perplexity: positive infinity

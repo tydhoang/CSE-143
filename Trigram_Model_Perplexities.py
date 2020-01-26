@@ -25,14 +25,17 @@ def triPerplexity(N, trigramFrequencies, bigramFrequencies, data):
 		words.append("<STOP>")
 		for i in range(len(words)):
 			if i + 2 == len(words):
-				break;
+				break
 			trigram = (words[i], words[i + 1], words[i + 2])
-			bigram = (trigram[0], trigram[1])
-			trigramFrequency = trigramFrequencies[trigram]
-			bigramFrequency = bigramFrequencies[bigram]
-			trigramProbability = Decimal(trigramFrequency)/Decimal(bigramFrequency)
-			trigramLogProbability = math.log(trigramProbability, 2)
-			sentenceProbability = Decimal(sentenceProbability) + Decimal(trigramLogProbability)
+			if trigram in trigramFrequencies:
+				bigram = (trigram[0], trigram[1])
+				trigramFrequency = trigramFrequencies[trigram]
+				bigramFrequency = bigramFrequencies[bigram]
+				trigramProbability = Decimal(trigramFrequency)/Decimal(bigramFrequency)
+				trigramLogProbability = math.log(trigramProbability, 2)
+				sentenceProbability = Decimal(sentenceProbability) + Decimal(trigramLogProbability)
+			else:
+				return -1
 		sentenceProbability = -sentenceProbability
 		dataSetProbability = Decimal(dataSetProbability) + Decimal(sentenceProbability)
 	preTriPerplexity = dataSetProbability/N
@@ -46,21 +49,27 @@ def main():
 	training = open("1b_benchmark.train.tokens")
 	trainingTriPerplexity = triPerplexity(NTraining, trigramFrequencies, bigramFrequencies, training)
 
-	bigramFrequencies = initializeFrequencies({}, "Test_Bigram_Data.txt")
-	trigramFrequencies = initializeFrequencies({},"Test_Trigram_Data.txt")
 	NTest = initializeN("Test_Token_Data.txt")
 	test = open("1b_benchmark.test.tokens")
 	testTriPerplexity = triPerplexity(NTest, trigramFrequencies, bigramFrequencies, test)
 
-	bigramFrequencies = initializeFrequencies({}, "Dev_Bigram_Data.txt")
-	trigramFrequencies = initializeFrequencies({},"Dev_Trigram_Data.txt")
 	NDev = initializeN("Dev_Token_Data.txt")
 	dev = open("1b_benchmark.dev.tokens")
 	devTriPerplexity = triPerplexity(NDev, trigramFrequencies, bigramFrequencies, dev)
 
 	outfile = open("Trigram_Perplexities_ALL.txt", "w")
-	outfile.write("Training data trigram perplexity: " + str(trainingTriPerplexity) + "\n")
-	outfile.write("Test data trigram perplexity: " + str(testTriPerplexity) + "\n")
-	outfile.write("Dev data trigram perplexity: " + str(devTriPerplexity))
+	if trainingTriPerplexity == -1:
+		outfile.write("Training data trigram perplexity: positive infinity\n")
+	else:
+		outfile.write("Training data trigram perplexity: " + str(trainingTriPerplexity) + "\n")
+	if testTriPerplexity == -1:
+		outfile.write("Test data trigram perplexity: positive infinity\n")
+	else:
+		outfile.write("Test data trigram perplexity: " + str(testTriPerplexity) + "\n")
+	if devTriPerplexity == -1:
+		outfile.write("Dev data trigram perplexity: positive infinity\n")
+	else:
+		outfile.write("Dev data trigram perplexity: " + str(devTriPerplexity))
+
 
 main()

@@ -32,14 +32,28 @@ def smooth(unigramTokens, bigramTokens, trigramTokens, weight1, weight2, weight3
 				bigram = (words[i - 1], words[i])
 				trigram = (words[i - 2], words[i - 1], words[i])
 
-			unigramProb = Decimal(unigramTokens[unigram])/Decimal(N)
-			bigramProb = Decimal(bigramTokens[bigram])/Decimal(unigramTokens[bigram[0]])
 			if firstWord == True:
-				trigramProb = 1
+				unigramProb = Decimal(unigramTokens[unigram])/Decimal(N)
+				isBigram = bigramTokens.get(bigram)
+				if isBigram == None:
+					bigramProb = 0
+				else:
+					bigramProb = Decimal(bigramTokens[bigram])/Decimal(unigramTokens[bigram[0]])
+				trigramProb = bigramProb
 				firstWord = False
 			else:
-				triBigram = (trigram[0], trigram[1])
-				trigramProb = Decimal(trigramTokens[trigram])/Decimal(bigramTokens[triBigram])
+				unigramProb = Decimal(unigramTokens[unigram])/Decimal(N)
+				isBigram = bigramTokens.get(bigram)
+				if isBigram == None:
+					bigramProb = 0
+				else:
+					bigramProb = Decimal(bigramTokens[bigram])/Decimal(unigramTokens[bigram[0]])
+				isTrigram = trigramTokens.get(trigram)
+				if isTrigram == None:
+					trigramProb = 0
+				else:
+					triBigram = (trigram[0], trigram[1])
+					trigramProb = Decimal(trigramTokens[trigram])/Decimal(bigramTokens[triBigram])
 			SmoothedProb = Decimal(weight1)*unigramProb + Decimal(weight2)*bigramProb + Decimal(weight3)*trigramProb
 			SmoothedProb = math.log(SmoothedProb, 2)
 			sentenceProb = Decimal(sentenceProb) + Decimal(SmoothedProb)
@@ -51,11 +65,11 @@ def smooth(unigramTokens, bigramTokens, trigramTokens, weight1, weight2, weight3
 
 
 def main():
-	unigramTokens = initializeFrequencies({}, "Dev_Token_Data.txt")
-	bigramTokens = initializeFrequencies({}, "Dev_Bigram_Data.txt")
-	trigramTokens = initializeFrequencies({}, "Dev_Trigram_Data.txt")
+	unigramTokens = initializeFrequencies({}, "Training_Token_Data.txt")
+	bigramTokens = initializeFrequencies({}, "Training_Bigram_Data.txt")
+	trigramTokens = initializeFrequencies({}, "Training_Trigram_Data.txt")
 
-	data = open("Dev_Trigram_Data.txt")
+	data = open("Dev_Token_Data.txt")
 	N = int(data.readline())
 	data.close()
 

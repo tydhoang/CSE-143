@@ -4,7 +4,6 @@ import sys
 import math
 from decimal import Decimal
 
-
 def initializeFrequencies(tokens, file):
 	tokens = {}
 	tokenData = open(file)
@@ -40,12 +39,12 @@ def main():
 	training = open("1b_benchmark.train.tokens")
 	trainingUniPerplexity = uniPerplexity(NTraining, trainingTokens, training)
 
-	testTokens = initializeFrequencies({},"Test_Token_Data.txt")
+	testTokens = initializeFrequencies({},"Training_Token_Data.txt")
 	NTest = initializeN("Test_Token_Data.txt")
 	test = open("1b_benchmark.test.tokens")
 	testUniPerplexity = uniPerplexity(NTest, testTokens, test)
 
-	devTokens = initializeFrequencies({},"Dev_Token_Data.txt")
+	devTokens = initializeFrequencies({},"Training_Token_Data.txt")
 	NDev = initializeN("Dev_Token_Data.txt")
 	dev = open("1b_benchmark.dev.tokens")
 	devUniPerplexity = uniPerplexity(NDev, devTokens, dev)
