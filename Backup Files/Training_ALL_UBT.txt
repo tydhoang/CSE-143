@@ -1,0 +1,3 @@
+Training data unigram perplexity: 803.4852488059408112985992677
+Training data bigram perplexity: 75.63322687111259853693276286
+Training data trigram perplexity: 7.428112994121130610688119616

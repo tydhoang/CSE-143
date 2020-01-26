@@ -1,8 +1,14 @@
+# @author Tyler Hoang
+# CSE-143
+# Training_Token_Initialization.py program that finds the frequency of all tokens in the training data. Words that occur less than 3 times are replaced
+# with <UNK> tokens. Dev and test data set are then analyzed for OOV vocab and subsequently replaced with <UNK> tokens. This data is outputted to the 
+# file Training_Token_Data.txt.
+# Afterwards, the bigrams and trigram frequencies are analyzed in the training set are stored in dictionaries and outputted to text files.
+#
+
 #! /usr/bin/env python3
 import fileinput
 import sys
-
-# Includes OOV correction to <UNK> tokens
 
 def main():
 	N = 0
@@ -10,6 +16,7 @@ def main():
 	bigramTokens = {}
 	trigramTokens = {}
 
+	# Create dictionary with token frequencies
 	trainingData = open("1b_benchmark.train.tokens")
 	for line in trainingData:
 		words = line.split()
@@ -21,8 +28,8 @@ def main():
 				trainingTokens[token] = trainingTokens[token] + 1
 			else:
 				trainingTokens[token] = 1
-
 	trainingData.close()
+
 	#Replace words with frequency < 3 with <UNK>
 	for line in fileinput.FileInput("1b_benchmark.train.tokens", inplace=True):
 		words = line.split()
@@ -62,7 +69,10 @@ def main():
 		print(newSentence)
 
 ################################################################################################
+# <UNK>'ing is now complete
+################################################################################################
 	
+	#Bigrams are now to be analyzed
 	updatedTrainingData = open("1b_benchmark.train.tokens")
 	for line in updatedTrainingData:
 		words = line.split()
@@ -78,6 +88,7 @@ def main():
 				bigramTokens[bigram] = 1
 	updatedTrainingData.close()
 
+	#Trigrams are now to be analyzed
 	updatedTrainingData = open("1b_benchmark.train.tokens")
 	for line in updatedTrainingData:
 		words = line.split()
@@ -93,6 +104,7 @@ def main():
 				trigramTokens[trigram] = 1
 	updatedTrainingData.close()
 
+	# Output the data to the respective text files
 	outFile = open("Training_Token_Data.txt", "w")
 	outFile.write(str(N) + "\n")
 	outFile.write(str(trainingTokens))

@@ -1,3 +1,0 @@
-Training data trigram perplexity: 6.444134116493833443889476988
-Test data trigram perplexity: positive infinity
-Dev data trigram perplexity: positive infinity
