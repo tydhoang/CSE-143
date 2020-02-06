@@ -1,5 +1,0 @@
-The following hyperparameters were used: 
-Unigram Weight: 0.33
-Bigram Weight: 0.33
-Trigram Weight: 0.34
-Smoothed Perplexity: 278.1580501679246258374494209

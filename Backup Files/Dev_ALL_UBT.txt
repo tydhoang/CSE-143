@@ -1,3 +1,0 @@
-Dev data unigram perplexity: 658.0445066285463403275740430
-Dev data bigram perplexity: 63.70757362051904996007344136
-Dev data trigram perplexity: 39.47865107091444464882295094

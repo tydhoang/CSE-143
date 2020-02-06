@@ -1,3 +1,0 @@
-Training data unigram perplexity: 976.5437422200674868515406408
-Test data unigram perplexity: 175.8225140292717589898896163
-Dev data unigram perplexity: 177.4184851436778946009079879

@@ -1,3 +1,0 @@
-Training data bigram perplexity: 77.07346595628909290574624416
-Test data bigram perplexity: positive infinity
-Dev data bigram perplexity: positive infinity

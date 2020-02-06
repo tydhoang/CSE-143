@@ -1,3 +1,0 @@
-Test data unigram perplexity: 896.4994914343556252916454548
-Test data bigram perplexity: positive infinity
-Test data trigram perplexity: positive infinity
